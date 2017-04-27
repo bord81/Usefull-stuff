@@ -8,7 +8,7 @@ How to use it:
 
 1) Create two classes in your existing project or create a new one. Copy and paste the code from here.
 2) Add objectdb.jar to your dependencies.
-3) Create an entity class representing your table in ObjectDB. It should implement Serializable.
+3) Create an entity class representing your table in ObjectDB. It should have an empty constructor and implement Serializable.
 4) Modify two(2) lines in Serializer class - file name to save the entity class and its instantiation line.
 5) Run main method in ODBCreate class and select 's'.
 6) If all is OK, provide the database file name in ODBCreate class and run the main method with 'e' option.

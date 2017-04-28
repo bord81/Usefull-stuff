@@ -57,7 +57,7 @@ public class ODBCreate {
                             if (field_type.isInstance(aString)) {
                                 f = setClassField(f, entity_class, val);
                             } else if (field_type.isPrimitive()) {
-                                f = setClassField(f, entity_class, Long.parseLong(val)); //Change to Integer, if you need
+                                f = setClassField(f, entity_class, Long.parseLong(val)); //Change to Integer.parseInt, if you need
                             } else if (field_type.isInstance(aLong)) {
                                 f = setClassField(f, entity_class, Long.valueOf(val));
                             } else if (field_type.isInstance(aDouble)) {

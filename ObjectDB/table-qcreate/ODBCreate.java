@@ -18,6 +18,7 @@ public class ODBCreate {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        scanner.useDelimiter("\\n");
         System.out.println("Serialize new class - 's', create new entries - 'e' or any other key to exit");
         String choice = scanner.next();
         switch (choice) {

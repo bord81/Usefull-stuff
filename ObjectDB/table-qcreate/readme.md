@@ -12,6 +12,7 @@ How to use it:
 4) Modify two(2) lines in Serializer class - file name to save the entity class and its instantiation line.
 5) Run main method in ODBCreate class and select 's'.
 6) If all is OK, provide the database file name in ODBCreate class and run the main method with 'e' option.
+6.a) In this version you can choose 'f' to read the data from the tsv/csv-like file. Put correct filename and field separator to the variable declarations before.
 7) Enter the number of entries and provide values for them.
 
 Optionally you can add/change data types depending on your table (see comments in ODBCreate class), but for most common

@@ -6,7 +6,7 @@ import java.io.ObjectOutputStream;
 public class Serializer {
 
     //MODIFY THIS LINE
-    private static final String targetFile = "your_entity.ser"; //Enter the filename for serialized class
+    private static final String targetFile = "your_entity.ser"; ////Enter the filename for serialized class for both serialization and DB update
 
     public static void serializeYourClass() {
 

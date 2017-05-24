@@ -17,7 +17,7 @@ public class Serializer {
         try {
             try (FileOutputStream fileOutputStream = new FileOutputStream(file);
                  ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
-                objectOutputStream.writeObject(jsfTestCookie);
+                objectOutputStream.writeObject(someEntityClass);
             }
         } catch (IOException e) {
             e.printStackTrace();

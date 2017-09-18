@@ -1,4 +1,5 @@
-//A simple daemon for client apps testing which listens to HTTP port, returns simple message and logs processing status and the incoming request headers to stdout 
+//A simple daemon for client apps testing which listens to HTTP port, 
+//returns simple message and logs processing status and the incoming request headers to stdout 
 
 import java.net.ServerSocket;
 import java.net.Socket;

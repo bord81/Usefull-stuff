@@ -22,7 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Twac {
-
+    
     final static String HELP = "-help";
     final static String SIG_METHOD = "HMAC-SHA1";
     final static String OAUTH_VER = "1.0";
@@ -35,7 +35,7 @@ public class Twac {
     static String twPrivConsKey;
     static String oAccToken;
     static String oTokenSec;
-
+    
     public static void main(String[] args) throws IOException {
         if (args == null || args.length < 1) {
             System.out.println("Please specify parameters or run with -help for help");
@@ -45,7 +45,7 @@ public class Twac {
             help();
             return;
         }
-        if (args[0] != null && args[1] != null && args[2] != null && args[3] != null && args[4] != null && args[5] != null && args[6] != null) {
+        if (args.length == 7 && (args[0] != null && args[1] != null && args[2] != null && args[3] != null && args[4] != null && args[5] != null && args[6] != null)) {
             outputFile = args[0];
             httpMethod = args[1];
             oauthUrl = args[2];
@@ -57,7 +57,7 @@ public class Twac {
             System.out.println("Inconsistent parameters, run with -help for help");
             return;
         }
-
+        
         Mac mac = null;
         try {
             mac = Mac.getInstance("HmacSHA1");
@@ -94,14 +94,37 @@ public class Twac {
                     nonce_array[i] = (byte) (122 - next);
                 }
             }
-
+            
             String nonce = new String(nonce_array);
             StringBuilder paramString = new StringBuilder();
             StringBuilder finParamString = new StringBuilder();
             finParamString.append(httpMethod).append("&");
-
-            finParamString.append(URLEncoder.encode(oauthUrl, "UTF-8"));
-
+            if (oauthUrl.contains("?")) {
+                int parIndex = oauthUrl.indexOf("?");
+                String pars = oauthUrl.substring(parIndex + 1);
+                finParamString.append(URLEncoder.encode(oauthUrl.substring(0, parIndex), "UTF-8"));
+                while (true) {
+                    parIndex = pars.indexOf("=");
+                    if (parIndex == -1) {
+                        break;
+                    }
+                    String key = pars.substring(0, parIndex);
+                    String value;
+                    pars = pars.substring(parIndex + 1);
+                    if (!pars.contains("&")) {
+                        value = pars;
+                        paramsMap.put(URLEncoder.encode(key, "UTF-8"), URLEncoder.encode(value, "UTF-8"));
+                        break;
+                    } else {
+                        parIndex = pars.indexOf("&");
+                        value = pars.substring(0, parIndex);
+                        paramsMap.put(URLEncoder.encode(key, "UTF-8"), URLEncoder.encode(value, "UTF-8"));
+                        pars = pars.substring(parIndex + 1);
+                    }
+                }
+            } else {
+                finParamString.append(URLEncoder.encode(oauthUrl, "UTF-8"));
+            }
             finParamString.append("&");
             paramsMap.put(URLEncoder.encode("oauth_consumer_key", "UTF-8"), URLEncoder.encode(twConsKey, "UTF-8"));
             paramsMap.put(URLEncoder.encode("oauth_nonce", "UTF-8"), URLEncoder.encode(nonce, "UTF-8"));
@@ -110,14 +133,14 @@ public class Twac {
             paramsMap.put(URLEncoder.encode("oauth_version", "UTF-8"), URLEncoder.encode(OAUTH_VER, "UTF-8"));
             Long secondsEpoch = System.currentTimeMillis() / 1000;
             paramsMap.put(URLEncoder.encode("oauth_timestamp", "UTF-8"), URLEncoder.encode(secondsEpoch.toString(), "UTF-8"));
-
+            
             for (Map.Entry<String, String> entry : paramsMap.entrySet()) {
                 paramString.append(entry.getKey());
                 paramString.append("=");
                 paramString.append(entry.getValue());
                 paramString.append("&");
             }
-
+            
             paramString.deleteCharAt(paramString.length() - 1);
             finParamString.append(URLEncoder.encode(paramString.toString(), "UTF-8"));
             byte[] ouath_sig_arr = Base64.getUrlEncoder().encode(mac.doFinal(finParamString.toString().getBytes()));
@@ -136,7 +159,7 @@ public class Twac {
         }
         String authHeader = authHeaderString.toString().trim();
         authHeader = authHeader.substring(0, authHeader.length() - 1);
-
+        
         URL url;
         HttpURLConnection connection;
         try {
@@ -213,11 +236,11 @@ public class Twac {
         connection.disconnect();
         successMessage();
     }
-
+    
     public static void successMessage() {
         System.out.println("Operation success!");
     }
-
+    
     public static void help() {
         System.out.println("***\n");
         System.out.println("twac is used to get the response from one of Twitter API endpoints using provided consumer key and access token.");
@@ -231,7 +254,7 @@ public class Twac {
         System.out.println("<OAuth access token> and <OAuth token secret> - test tokens for your app.\n");
         System.out.println("***");
     }
-
+    
     public static void handleException(Exception e) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         while (true) {

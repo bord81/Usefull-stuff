@@ -11,3 +11,5 @@ Syntax is: java -jar twac.jar \<Output file\> \<HTTP method\> \<HTTP endpoint\> 
 \<OAuth access token\> and \<OAuth token secret\> - test tokens for your app.
 
 To get this info run: java -jar twac.jar -help
+
+The program will output formatted JSON file at your \<Output file\> path overwriting if it exists and optionally saving unformatted response to \<Output file\> + 'unf' path (if it does not exist).

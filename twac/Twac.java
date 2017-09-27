@@ -22,7 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Twac {
-    
+
     final static String HELP = "-help";
     final static String SIG_METHOD = "HMAC-SHA1";
     final static String OAUTH_VER = "1.0";
@@ -35,7 +35,7 @@ public class Twac {
     static String twPrivConsKey;
     static String oAccToken;
     static String oTokenSec;
-    
+
     public static void main(String[] args) throws IOException {
         if (args == null || args.length < 1) {
             System.out.println("Please specify parameters or run with -help for help");
@@ -57,7 +57,7 @@ public class Twac {
             System.out.println("Inconsistent parameters, run with -help for help");
             return;
         }
-        
+
         Mac mac = null;
         try {
             mac = Mac.getInstance("HmacSHA1");
@@ -94,7 +94,7 @@ public class Twac {
                     nonce_array[i] = (byte) (122 - next);
                 }
             }
-            
+
             String nonce = new String(nonce_array);
             StringBuilder paramString = new StringBuilder();
             StringBuilder finParamString = new StringBuilder();
@@ -133,14 +133,14 @@ public class Twac {
             paramsMap.put(URLEncoder.encode("oauth_version", "UTF-8"), URLEncoder.encode(OAUTH_VER, "UTF-8"));
             Long secondsEpoch = System.currentTimeMillis() / 1000;
             paramsMap.put(URLEncoder.encode("oauth_timestamp", "UTF-8"), URLEncoder.encode(secondsEpoch.toString(), "UTF-8"));
-            
+
             for (Map.Entry<String, String> entry : paramsMap.entrySet()) {
                 paramString.append(entry.getKey());
                 paramString.append("=");
                 paramString.append(entry.getValue());
                 paramString.append("&");
             }
-            
+
             paramString.deleteCharAt(paramString.length() - 1);
             finParamString.append(URLEncoder.encode(paramString.toString(), "UTF-8"));
             byte[] ouath_sig_arr = Base64.getUrlEncoder().encode(mac.doFinal(finParamString.toString().getBytes()));
@@ -159,7 +159,7 @@ public class Twac {
         }
         String authHeader = authHeaderString.toString().trim();
         authHeader = authHeader.substring(0, authHeader.length() - 1);
-        
+
         URL url;
         HttpURLConnection connection;
         try {
@@ -197,6 +197,15 @@ public class Twac {
                 }
                 builder.append(end_buf);
             }
+            String unformattedFile = outputFile + "unf";
+            File uFile = new File(unformattedFile);
+            if (!uFile.exists()) {
+                uFile.createNewFile();
+                FileWriter ufw = new FileWriter(uFile);
+                ufw.write(builder.toString());
+                ufw.flush();
+                ufw.close();
+            }
             boolean trim = false;
             if (builder.charAt(0) == '[' && builder.charAt(builder.length() - 1) == ']') {
                 builder.deleteCharAt(0);
@@ -207,6 +216,7 @@ public class Twac {
             try {
                 JSONObject nObject = new JSONObject(finString);
                 String jFinString = nObject.toString(INDENT_FACTOR);
+                String teste = nObject.toString();
                 if (trim) {
                     builder = new StringBuilder(jFinString);
                     builder.insert(0, '[');
@@ -236,11 +246,11 @@ public class Twac {
         connection.disconnect();
         successMessage();
     }
-    
+
     public static void successMessage() {
         System.out.println("Operation success!");
     }
-    
+
     public static void help() {
         System.out.println("***\n");
         System.out.println("twac is used to get the response from one of Twitter API endpoints using provided consumer key and access token.");
@@ -254,7 +264,7 @@ public class Twac {
         System.out.println("<OAuth access token> and <OAuth token secret> - test tokens for your app.\n");
         System.out.println("***");
     }
-    
+
     public static void handleException(Exception e) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         while (true) {

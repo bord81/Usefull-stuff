@@ -262,6 +262,7 @@ public class Twac {
         System.out.println("<HTTP endpoint> - Twitter resource URL.");
         System.out.println("<Consumer key> and <Consumer secret key> - your app credentials.");
         System.out.println("<OAuth access token> and <OAuth token secret> - test tokens for your app.\n");
+        System.out.println("The program will output formatted JSON file at your <Output file> path overwriting if it exists and optionally saving unformatted response to <Output file> + 'unf' path (if it does not exist).\n");
         System.out.println("***");
     }
 

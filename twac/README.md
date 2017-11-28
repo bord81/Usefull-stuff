@@ -1,3 +1,5 @@
+/* UNDER CONSTRUCTION */
+
 This is a command-line tool to test Twitter REST API with your application credentials.
 
 You can take the jar with the lib directory or compile it yourself from source.

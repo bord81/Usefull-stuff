@@ -84,9 +84,10 @@ public class Twac {
 
     private static void doApiRequest() {
         try {
-            loadTokensFromLocalFile();
-            if (TwitterCall.executeRequest(twConsKey, twPrivConsKey)) {
-                requestSuccess();
+            if (loadTokensFromLocalFile()) {
+                if (TwitterCall.executeRequest(twConsKey, twPrivConsKey)) {
+                    requestSuccess();
+                }
             }
         } catch (IOException ex) {
             handleException(ex);
@@ -109,6 +110,10 @@ public class Twac {
         System.out.println("Inconsistent parameters, run with -h or --help to get more information");
     }
 
+    private static void authFileMissing() {
+        System.out.println("Authorization tokens missing, please run with -a first;");
+    }
+
     private static void askForPin() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please copy and paste the following URL to the browser and after obtaining PIN code, type it here.\n");
@@ -117,8 +122,12 @@ public class Twac {
         pin = sc.nextLine();
     }
 
-    private static void loadTokensFromLocalFile() throws FileNotFoundException, IOException {
+    private static boolean loadTokensFromLocalFile() throws FileNotFoundException, IOException {
         File file = new File(System.getProperty("user.dir") + File.separator + keys_file);
+        if (!file.exists()) {
+            authFileMissing();
+            return false;
+        }
         byte[] input;
         try (FileInputStream fis = new FileInputStream(file)) {
             input = new byte[fis.available()];
@@ -130,6 +139,7 @@ public class Twac {
         twPrivConsKey = tokens[1];
         oRToken = tokens[2];
         oRTokenSec = tokens[3];
+        return true;
     }
 
     private static void saveTokensToLocalFile() {

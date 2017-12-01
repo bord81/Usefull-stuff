@@ -15,6 +15,6 @@ java -jar twac.jar \<-a, --authorize\> \<consumer key\> \<consumer secret key\>
 
 java -jar twac.jar \<-r, --request\> \<output file\> \<HTTP method\> \<HTTP endpoint with call parameters\>
 
-The program will output formatted JSON file at your \<output file\> path overwriting it if it exists.
+The program will output unformatted JSON file at your \<output file\> path overwriting it if it exists.
 
 Warning: -a stores the API keys by overwriting twac_data.aut without prompt in the same directory where twac.jar is located.

@@ -174,7 +174,7 @@ public class Twac {
         System.out.println("Options to run it are:");
         System.out.println("java -jar twac.jar <-a, --authorize> <consumer key> <consumer secret key>");
         System.out.println("java -jar twac.jar <-r, --request> <output file> <HTTP method> <HTTP endpoint with call parameters>");
-        System.out.println("The program will output formatted JSON file at your <output file> path overwriting it if it exists.\n");
+        System.out.println("The program will output unformatted JSON file at your <output file> path overwriting it if it exists.\n");
         System.out.println("Run -a prior to -r, so that the program gets authentication to use API.");
         System.out.println("Warning: -a stores the API keys by overwriting twac_data.aut in the same directory where twac.jar is located.");
         System.out.println("***");

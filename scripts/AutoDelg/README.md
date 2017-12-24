@@ -7,7 +7,6 @@ Enter 'quit' to exit (default).
 Verify script commands and download path in prop.prop file which should be in the same folder.
 
 COMMANDS:
--
 
 Compile:  groovyc AutoDelg.groovy
 

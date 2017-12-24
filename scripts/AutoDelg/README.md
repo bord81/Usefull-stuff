@@ -1,6 +1,6 @@
+Tired of manually adding each torrent link in deluge-console?
 
-
-Script waits for console input of magnet torrent links (one at a time) and adds them to download queue.
+This script waits for console input of magnet torrent links (one at a time) and adds them to download queue.
 
 Enter 'quit' to exit (default).
 

@@ -5,8 +5,9 @@ Script waits for console input of magnet torrent links (one at a time) and adds 
 Enter 'quit' to exit (default).
 
 Verify script commands and download path in prop.prop file which should be in the same folder.
-----------------------
+
 COMMANDS:
+----------------------
 
 Compile:  groovyc AutoDelg.groovy
 

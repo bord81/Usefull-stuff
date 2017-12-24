@@ -1,3 +1,0 @@
-addCommand = "add -p"
-quitCommand = "quit"
-savePath = "your_download_path_here"

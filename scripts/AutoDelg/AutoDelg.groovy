@@ -1,10 +1,12 @@
-class AutoDelg {
+class AutoDel {
     static def propFileName = 'prop.prop'
-    static def mainCommand = 'deluge-console'
-    static def ac = 'addCommand'
-    static def qc = 'quitCommand'
-    static def sp = 'savePath'
-    static def spc = ' '
+    static def props = new Properties()
+    static def programName = 'deluge-console'
+    static def cmds_keys = [ac : 'addCommand', pc: 'pauseCommand', rc: 'removeCommand', sdc: 'showDownloadingCommand',
+                            ssc: 'showSeedingCommand', sqc: 'showQueuedCommand', spc: 'showPausedCommand',
+                            kd : 'keyDownloading', ks: 'keySeeding', kq: 'keyQueued', kp: 'keyPaused', kr: 'keyRemove',
+                            sp : 'savePath', ke: 'keyExit']
+    static def space = ' '
     static def missing = { println("$it property is missing") }
 
     static void main(String[] args) {
@@ -13,25 +15,43 @@ class AutoDelg {
             println("Please create $propFileName in the script directory.")
             return
         }
-        def props = new ConfigSlurper().parse(file.toURI().toURL()).toProperties()
-        if (props.getProperty(ac) == null) {
-            missing.call(ac)
-            return
-        } else if (props.getProperty(qc) == null) {
-            missing.call(qc)
-            return
-        } else if (props.getProperty(sp) == null) {
-            missing.call(sp)
-            return
+        props = new ConfigSlurper().parse(file.toURI().toURL()).toProperties()
+        cmds_keys.each {
+            if (props.getProperty(it.value) == null) {
+                missing.call(it.value)
+                return
+            }
         }
         while (true) {
             def next = System.in.newReader().readLine()
-            if (next == props.getProperty(qc)) {
+            if (next == props.getProperty(cmds_keys.ke)) {
                 break
+            } else if (next == props.getProperty(cmds_keys.kd)) {
+                showInfo('sdc')
+            } else if (next == props.getProperty(cmds_keys.ks)) {
+                showInfo('ssc')
+            } else if (next == props.getProperty(cmds_keys.kq)) {
+                showInfo('sqc')
+            } else if (next == props.getProperty(cmds_keys.kp)) {
+                showInfo('spc')
+            } else if (next ==~ /(\w\s)[\w.]+/) {
+                if (next.charAt(0) == props.getProperty(cmds_keys.kr)) {
+                    executeCmdWithParams('rc', next.substring(2, next.length()))
+                } else if (next.charAt(0) == props.getProperty(cmds_keys.kp)) {
+                    executeCmdWithParams('pc', next.substring(2, next.length()))
+                }
             } else {
-                def cmd = mainCommand + spc + props.getProperty(ac) + spc + props.getProperty(sp) + spc + next
+                def cmd = programName + space + props.getProperty(cmds_keys.ac) + space + props.getProperty(cmds_keys.sp) + space + next
                 println(cmd)
             }
         }
+    }
+
+    static void showInfo(String s) {
+        println(programName + space + props.getProperty(cmds_keys.get(s)))
+    }
+
+    static void executeCmdWithParams(String cmd, String param) {
+        println(programName + space + props.getProperty(cmds_keys.get(cmd)) + space + param)
     }
 }

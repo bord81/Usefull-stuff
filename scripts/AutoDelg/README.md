@@ -1,10 +1,15 @@
 Tired of manually entering commands for adding each torrent link in deluge-console?
 
-This script waits for console input of magnet torrent links (one at a time) and adds them to download queue.
+This script makes the most used actions easier.
 
-Enter 'quit' to exit (default).
+ - To add a magnet link just paste it to the terminal prompt and press enter.
+ - To view current downloads press 'd'.
+ - Paused and queued torrents 'p' and 'q' resp.
+ - If you put space and torrent id after 'p' or 'r' it will be paused or removed resp.
+ - 'e' for exit
 
-Verify script commands and download path in prop.prop file which should be in the same folder.
+You can change the default keys and commands by editing prop.prop file which should be in the same folder as script.
+
 
 COMMANDS:
 

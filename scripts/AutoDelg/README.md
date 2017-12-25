@@ -1,3 +1,5 @@
+/*Tested with deluge-console: 1.3.13*/
+
 Tired of manually entering commands for adding each torrent link in deluge-console?
 
 This script makes the most used actions easier.

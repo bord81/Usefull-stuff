@@ -7,12 +7,12 @@ class AutoDel {
                             kd : 'keyDownloading', ks: 'keySeeding', kq: 'keyQueued', kp: 'keyPaused', kr: 'keyRemove',
                             sp : 'savePath', ke: 'keyExit']
     static def space = ' '
-    static def missing = { println("$it property is missing") }
+    static def missing = { println("echo $it property is missing") }
 
     static void main(String[] args) {
         def file = new File(System.getProperty('user.dir') + File.separator + propFileName)
         if (!file.exists()) {
-            println("Please create $propFileName in the script directory.")
+            println("echo Please create $propFileName in the script directory.")
             return
         }
         props = new ConfigSlurper().parse(file.toURI().toURL()).toProperties()

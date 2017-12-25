@@ -16,12 +16,15 @@ class AutoDel {
             return
         }
         props = new ConfigSlurper().parse(file.toURI().toURL()).toProperties()
+        boolean exit = false
         cmds_keys.each {
             if (props.getProperty(it.value) == null) {
                 missing.call(it.value)
-                return
+                exit = true
             }
         }
+        if (exit)
+            return
         while (true) {
             def next = System.in.newReader().readLine()
             if (next == props.getProperty(cmds_keys.ke)) {

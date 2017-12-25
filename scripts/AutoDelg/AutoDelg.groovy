@@ -1,4 +1,4 @@
-class AutoDel {
+class AutoDelg {
     static def propFileName = 'prop.prop'
     static def props = new Properties()
     static def programName = 'deluge-console'

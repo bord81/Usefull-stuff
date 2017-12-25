@@ -6,7 +6,7 @@ This script makes the most used actions easier.
 
  - To add a magnet link just paste it to the terminal prompt and press enter.
  - To view current downloads press 'd'.
- - Paused and queued torrents 'p' and 'q' resp.
+ - Seeding, paused and queued torrents 's', 'p' and 'q' resp.
  - If you put space and torrent id after 'p' or 'r' it will be paused or removed resp.
  - 'e' for exit
 
